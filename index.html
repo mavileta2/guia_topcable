@@ -420,6 +420,9 @@ body.links-open .lk-scrim{opacity:1;visibility:visible}
 .lk__ico{width:28px;height:28px;border-radius:7px;background:#E6EEF6;color:var(--blue);display:flex;align-items:center;justify-content:center;flex:none;font:700 9px var(--inter);letter-spacing:.02em}
 .lk__ico svg{width:15px;height:15px}
 .lk__pills{display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end}
+.lk__item--prod{flex-direction:column;align-items:stretch;gap:8px;padding-top:10px;padding-bottom:12px}
+.lk__item--prod>span{font-weight:600}
+.lk__item--prod .lk__pills{justify-content:flex-start}
 .lk__pill{display:inline-flex;align-items:center;gap:5px;padding:5px 9px;border-radius:99px;border:1px solid var(--line);background:var(--white);font:600 11px var(--inter);color:var(--blue);text-decoration:none;white-space:nowrap}
 .lk__pill:hover{background:var(--blue);border-color:var(--blue);color:var(--white)}
 .lk mark{background:#FFE58F;color:inherit;border-radius:2px}
@@ -1591,7 +1594,7 @@ function renderLinks(){
     if(sec.page||sec.catalog)html+=`<div class="lk__cat">${sec.page?lkA(sec.page,'lk__pill',T.page+' ↗'):''}${sec.catalog?lkA(sec.catalog,'lk__pill','PDF · '+T.catalog):''}</div>`;
     html+=items.map(it=>{
       if(it.links.length===1&&it.links[0].kind==='link'){const u=it.links[0].url,k=lkKind(u);return`<div class="lk__item">${lkA(u,'lk__main',`<span class="lk__ico">${LK_ICON[k]}</span><span>${hl(it.label,q)}</span>`)}</div>`}
-      return`<div class="lk__item"><span>${hl(it.label,q)}</span><div class="lk__pills">${[...it.links].sort((x,y)=>(y.kind==='page')-(x.kind==='page')).map(l=>lkA(l.url,'lk__pill',l.kind==='page'?T.page+' ↗':(T[l.kind]||T.datasheet),it.label+' · '+(T[l.kind]||''))).join('')}</div></div>`}).join('');
+      return`<div class="lk__item lk__item--prod"><span>${hl(it.label,q)}</span><div class="lk__pills">${[...it.links].sort((x,y)=>(y.kind==='page')-(x.kind==='page')).map(l=>lkA(l.url,'lk__pill',l.kind==='page'?T.page+' ↗':(T[l.kind]||T.datasheet),it.label+' · '+(T[l.kind]||''))).join('')}</div></div>`}).join('');
     html+='</details>';
   });
   body.innerHTML=html?`<div class="lk__count">${T.count(total)}</div>`+html:`<div class="lk__empty">${D.noResults}</div>`;
